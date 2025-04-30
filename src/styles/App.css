@@ -1,0 +1,36 @@
+.app {
+  width: 100vw;
+  height: 100vh;
+  background: #444;
+}
+
+.animation-controls {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 100;
+  display: flex;
+  gap: 10px;
+  background: rgba(0,0,0,0.7);
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.animation-button {
+  background: #000000;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.animation-button:hover {
+  background: #333333;
+}
+
+.animation-button.active {
+  background: #dc3545;
+} 

@@ -1,12 +1,15 @@
 import React from 'react';
-import './Controls.css';
+import '../../styles/AnimationControls.css';
 
-export function AnimationControls({ currentAnimation, setCurrentAnimation }) {
+export function AnimationControls({ 
+  currentAnimation, 
+  setCurrentAnimation
+}) {
   const animations = [
-    { id: 'walk', label: 'Caminar' },
-    { id: 'float', label: 'Flotar' },
-    { id: 'rotate', label: 'Rotar' },
-    { id: 'pulse', label: 'Latido' }
+    { id: 'caminar', label: 'Caminar' },
+    { id: 'flotar', label: 'Flotar' },
+    { id: 'rotar', label: 'Rotar' },
+    { id: 'latido', label: 'Latido' }
   ];
 
   return (

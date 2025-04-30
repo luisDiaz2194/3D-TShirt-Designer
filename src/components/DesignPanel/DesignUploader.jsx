@@ -4,12 +4,7 @@ export function DesignUploader({ position, onUpload }) {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      onUpload(position, event.target.result);
-    };
-    reader.readAsDataURL(file);
+    onUpload(position, file);
   };
 
   return (

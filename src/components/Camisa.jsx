@@ -3,7 +3,7 @@ import { useRef, useEffect, useMemo } from 'react'
 import { useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
 
-export function Shirt({ 
+export function Camisa({ 
   currentAnimation, 
   color = "#ffffff", 
   designs = { front: null, back: null },
@@ -94,10 +94,10 @@ export function Shirt({
     animationTime.current += delta
 
     switch(currentAnimation) {
-      case 'walk': animateWalk(); break
-      case 'float': animateFloat(); break
-      case 'rotate': animateRotate(); break
-      case 'pulse': animatePulse(); break
+      case 'caminar': animateWalk(); break
+      case 'flotar': animateFloat(); break
+      case 'rotar': animateRotate(); break
+      case 'latido': animatePulse(); break
     }
   })
 
@@ -180,4 +180,4 @@ export function Shirt({
       })}
     </group>
   )
-}
+} 
