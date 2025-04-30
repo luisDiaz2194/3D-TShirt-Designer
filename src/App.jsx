@@ -1,8 +1,7 @@
 import { Suspense, useState } from 'react'
 import { CanvasContainer } from './components/CanvasContainer/CanvasContainer'
 import { Shirt } from './components/Shirt/Shirt'
-import { AnimationControls } from './components/UI/AnimationControls'
-import { DesignPanel } from './components/DesignPanel/DesignPanel'
+import { ControlsContainer } from './components/UI/ControlsContainer'
 
 export default function App() {
   const [currentAnimation, setCurrentAnimation] = useState(null)
@@ -21,8 +20,7 @@ export default function App() {
   })
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
-		<DesignPanel />
-      <AnimationControls 
+	  <ControlsContainer 
         currentAnimation={currentAnimation}
         setCurrentAnimation={setCurrentAnimation}
       />
