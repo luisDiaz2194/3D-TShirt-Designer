@@ -1,13 +1,23 @@
-import { useGLTF } from '@react-three/drei'
-import { useRef, useEffect } from 'react'
-import { useFrame } from '@react-three/fiber'
+import { useGLTF, Decal } from '@react-three/drei'
+import { useRef, useEffect, useState } from 'react'
+import { useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
 
-export function Shirt({ currentAnimation, color = "#ffffff" }) {
+export function Shirt({ 
+  currentAnimation, 
+  color = "#ffffff", 
+  designs = { front: null, back: null },
+  designDimensions = { front: { width: 0.5, height: 0.5 }, back: { width: 0.5, height: 0.5 } },
+  designPositions = { front: { x: 0, y: 1.26 }, back: { x: 0, y: 1.26 } }
+}) {
   const { nodes } = useGLTF('/models/T_shirt_gltf.zip.gltf')
   const groupRef = useRef()
   const animationTime = useRef(0)
   const prevAnimation = useRef(null)
+
+  // Texturas
+  const frontTexture = designs.front ? useLoader(THREE.TextureLoader, designs.front) : null
+  const backTexture = designs.back ? useLoader(THREE.TextureLoader, designs.back) : null
 
   // Referencias para partes de la camisa
   const rightShoulderRef = useRef(null)
@@ -66,21 +76,10 @@ export function Shirt({ currentAnimation, color = "#ffffff" }) {
     if (leftSleeveRef.current) leftSleeveRef.current.rotation.set(0, 0, 0)
   }
 
-  // Parámetros de animación
-  const WALK_PARAMS = {
-    speed: 1.5,
-    bodyBounce: 0.06,
-    bodySwing: 0.08,
-    shoulderSwing: 1.5,
-    armFollow: 0.7,
-    sleeveFollow: 0.5,
-    elbowBend: 0.5
-  }
-
+  // Animaciones (caminar, flotar, rotar, latido)
   useFrame((state, delta) => {
     if (!groupRef.current || !currentAnimation) return
 
-    // Reset al cambiar animación
     if (currentAnimation !== prevAnimation.current) {
       animationTime.current = 0
       prevAnimation.current = currentAnimation
@@ -90,48 +89,25 @@ export function Shirt({ currentAnimation, color = "#ffffff" }) {
     animationTime.current += delta
 
     switch(currentAnimation) {
-      case 'walk':
-        animateWalk()
-        break
-      case 'float':
-        animateFloat()
-        break
-      case 'rotate':
-        animateRotate()
-        break
-      case 'pulse':
-        animatePulse()
-        break
+      case 'walk': animateWalk(); break
+      case 'float': animateFloat(); break
+      case 'rotate': animateRotate(); break
+      case 'pulse': animatePulse(); break
     }
   })
 
   const animateWalk = () => {
-    const time = animationTime.current * WALK_PARAMS.speed
+    const time = animationTime.current * 1.5
     
-    groupRef.current.position.y = INITIAL_POSITION[1] + Math.abs(Math.sin(time * 2)) * WALK_PARAMS.bodyBounce
-    groupRef.current.rotation.z = Math.sin(time) * WALK_PARAMS.bodySwing
+    groupRef.current.position.y = INITIAL_POSITION[1] + Math.abs(Math.sin(time * 2)) * 0.06
+    groupRef.current.rotation.z = Math.sin(time) * 0.08
 
     if (leftShoulderRef.current && rightShoulderRef.current) {
-      leftShoulderRef.current.rotation.z = Math.sin(time) * WALK_PARAMS.shoulderSwing
-      rightShoulderRef.current.rotation.z = -Math.sin(time) * WALK_PARAMS.shoulderSwing
+      leftShoulderRef.current.rotation.z = Math.sin(time) * 1.5
+      rightShoulderRef.current.rotation.z = -Math.sin(time) * 1.5
       
-      if (leftArmRef.current) {
-        leftArmRef.current.rotation.z = leftShoulderRef.current.rotation.z * WALK_PARAMS.armFollow
-        leftArmRef.current.rotation.x = Math.cos(time) * 0.3
-      }
-      if (rightArmRef.current) {
-        rightArmRef.current.rotation.z = rightShoulderRef.current.rotation.z * WALK_PARAMS.armFollow
-        rightArmRef.current.rotation.x = Math.cos(time + Math.PI) * 0.3
-      }
-      
-      if (leftSleeveRef.current) {
-        leftSleeveRef.current.rotation.z = leftShoulderRef.current.rotation.z * WALK_PARAMS.sleeveFollow
-        leftSleeveRef.current.rotation.x = leftArmRef.current?.rotation.x * 0.6 || 0
-      }
-      if (rightSleeveRef.current) {
-        rightSleeveRef.current.rotation.z = rightShoulderRef.current.rotation.z * WALK_PARAMS.sleeveFollow
-        rightSleeveRef.current.rotation.x = rightArmRef.current?.rotation.x * 0.6 || 0
-      }
+      if (leftArmRef.current) leftArmRef.current.rotation.z = leftShoulderRef.current.rotation.z * 0.7
+      if (rightArmRef.current) rightArmRef.current.rotation.z = rightShoulderRef.current.rotation.z * 0.7
     }
   }
 
@@ -152,20 +128,14 @@ export function Shirt({ currentAnimation, color = "#ffffff" }) {
     <group ref={groupRef}>
       {Object.values(nodes).map((node, idx) => {
         if (node.isMesh) {
+          const isFront = node.name.includes('Front')
+          const isBack = node.name.includes('Back')
+          
           let meshRef = null
-          if (/Right_(Shoulder|Clavicle)/i.test(node.name)) {
-            meshRef = rightShoulderRef
-          } else if (/Left_(Shoulder|Clavicle)/i.test(node.name)) {
-            meshRef = leftShoulderRef
-          } else if (/Right_Arm/i.test(node.name) && !/Fore/i.test(node.name)) {
-            meshRef = rightArmRef
-          } else if (/Left_Arm/i.test(node.name) && !/Fore/i.test(node.name)) {
-            meshRef = leftArmRef
-          } else if (/Right.*Sleeve/i.test(node.name)) {
-            meshRef = rightSleeveRef
-          } else if (/Left.*Sleeve/i.test(node.name)) {
-            meshRef = leftSleeveRef
-          }
+          if (/Right_(Shoulder|Clavicle)/i.test(node.name)) meshRef = rightShoulderRef
+          else if (/Left_(Shoulder|Clavicle)/i.test(node.name)) meshRef = leftShoulderRef
+          else if (/Right_Arm/i.test(node.name)) meshRef = rightArmRef
+          else if (/Left_Arm/i.test(node.name)) meshRef = leftArmRef
           
           return (
             <mesh
@@ -173,7 +143,24 @@ export function Shirt({ currentAnimation, color = "#ffffff" }) {
               geometry={node.geometry}
               material={node.material.clone()}
               ref={meshRef}
-            />
+            >
+              {isFront && frontTexture && (
+                <Decal
+                  position={[designPositions.front.x, designPositions.front.y, 0.1]}
+                  rotation={[0, 0, 0]}
+                  scale={[designDimensions.front.width, designDimensions.front.height, 1]}
+                  map={frontTexture}
+                />
+              )}
+              {isBack && backTexture && (
+                <Decal
+                  position={[designPositions.back.x, designPositions.back.y, -0.1]}
+                  rotation={[0, Math.PI, 0]}
+                  scale={[designDimensions.back.width, designDimensions.back.height, 1]}
+                  map={backTexture}
+                />
+              )}
+            </mesh>
           )
         }
         return null
