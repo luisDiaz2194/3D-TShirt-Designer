@@ -13,26 +13,15 @@ export function DesignUploader({ position, onUpload }) {
   };
 
   return (
-    <div style={{ margin: '10px 0' }}>
+    <div className="design-uploader">
       <input
         id={`file-input-${position}`}
         type="file"
         accept="image/*"
         onChange={handleFileChange}
-        style={{ display: 'none' }}
+        className="file-input"
       />
-      <label
-        htmlFor={`file-input-${position}`}
-        style={{
-          display: 'block',
-          padding: '10px',
-          background: '#4285F4',
-          color: 'white',
-          borderRadius: '4px',
-          textAlign: 'center',
-          cursor: 'pointer'
-        }}
-      >
+      <label htmlFor={`file-input-${position}`}>
         Upload {position} Design
       </label>
     </div>

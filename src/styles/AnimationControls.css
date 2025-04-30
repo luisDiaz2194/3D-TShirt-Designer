@@ -1,0 +1,36 @@
+:root {
+  --button-bg: rgb(34, 34, 34);
+  --button-hover: rgb(55, 56, 56);
+  --button-active: #dc3545;
+}
+
+.animation-controls {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  gap: 10px;
+  background: rgba(0,0,0,0.7);
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.animation-controls button {
+  background: var(--button-bg);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.animation-controls button:hover {
+  background: var(--button-hover);
+}
+
+.animation-controls button.active {
+  background: var(--button-active);
+} 
