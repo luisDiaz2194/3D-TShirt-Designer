@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import  './../../styles/DesignPanel.css';
 
 
@@ -24,8 +24,8 @@ export function DesignControls({ position, dimensions, onPositionChange, onDimen
   };
 
   return (
-    <div style={{ marginTop: '15px', borderTop: '1px solid #eee', paddingTop: '15px' }}>
-      <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '15px' }}>
+    <div className="design-controls">
+      <label className="aspect-ratio-label">
         <input
           type="checkbox"
           checked={lockRatio}
@@ -34,7 +34,7 @@ export function DesignControls({ position, dimensions, onPositionChange, onDimen
         Lock Aspect Ratio
       </label>
 
-      <h4 style={{ marginBottom: '10px' }}>Position</h4>
+      <h4>Position</h4>
       <SliderControl
         label="X"
         value={position.x}
@@ -52,7 +52,7 @@ export function DesignControls({ position, dimensions, onPositionChange, onDimen
         onChange={(v) => handlePosition('y', v)}
       />
 
-      <h4 style={{ margin: '15px 0 10px' }}>Size</h4>
+      <h4>Size</h4>
       <SliderControl
         label="Width"
         value={dimensions.width}
@@ -75,8 +75,8 @@ export function DesignControls({ position, dimensions, onPositionChange, onDimen
 
 function SliderControl({ label, value, onChange, ...props }) {
   return (
-    <div style={{ marginBottom: '10px' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+    <div className="slider-control">
+      <div className="slider-header">
         <label>{label}</label>
         <span>{value.toFixed(2)}</span>
       </div>
@@ -84,7 +84,6 @@ function SliderControl({ label, value, onChange, ...props }) {
         type="range"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        style={{ width: '100%' }}
         {...props}
       />
     </div>
