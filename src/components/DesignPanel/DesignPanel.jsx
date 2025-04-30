@@ -13,8 +13,8 @@ export function DesignPanel({
   const [activePosition, setActivePosition] = useState('front');
   const [localPosition, setLocalPosition] = useState({ x: 0, y: 1.26 });
   const [localDimensions, setLocalDimensions] = useState({ width: 0.5, height: 0.5 });
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
-  // Sincronización segura con el padre
   useEffect(() => {
     onPositionChange(activePosition, localPosition);
   }, [localPosition, activePosition]);
@@ -23,7 +23,6 @@ export function DesignPanel({
     onDimensionsChange(activePosition, localDimensions);
   }, [localDimensions, activePosition]);
 
-  // Verificación segura del diseño activo
   const hasDesign = designs && designs[activePosition];
 
   const handleCenterDesign = () => {
@@ -31,75 +30,68 @@ export function DesignPanel({
     setLocalDimensions({ width: 0.5, height: 0.5 });
   };
 
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
   return (
     <div className="design-panel">
-      <div className="position-selector">
-        <button 
-          onClick={() => setActivePosition('front')}
-          className={activePosition === 'front' ? 'active' : ''}
-        >
-          Front
-        </button>
-        <button
-          onClick={() => setActivePosition('back')}
-          className={activePosition === 'back' ? 'active' : ''}
-        >
-          Back
-        </button>
-      </div>
+      <div className="basic-controls">
+        <div className="position-selector">
+          <button 
+            onClick={() => setActivePosition('front')}
+            className={activePosition === 'front' ? 'active' : ''}
+          >
+            Front
+          </button>
+          <button
+            onClick={() => setActivePosition('back')}
+            className={activePosition === 'back' ? 'active' : ''}
+          >
+            Back
+          </button>
+        </div>
 
-      <div className="design-preview-container">
-        {hasDesign ? (
-          <div className="design-preview">
-            <img 
-              src={designs[activePosition]} 
-              alt={`${activePosition} design preview`}
-              style={{ 
-                maxWidth: '100%', 
-                maxHeight: '200px', 
-                objectFit: 'contain',
-                border: '1px solid #ddd',
-                borderRadius: '4px',
-                padding: '5px'
-              }}
-            />
-          </div>
-        ) : (
-          <div className="design-preview-placeholder">
-            No design uploaded
-          </div>
-        )}
+        <DesignUploader 
+          position={activePosition} 
+          onUpload={onUpload} 
+        />
       </div>
-
-      <DesignUploader 
-        position={activePosition} 
-        onUpload={onUpload} 
-      />
 
       {hasDesign && (
-        <>
-          <DesignControls
-            position={localPosition}
-            dimensions={localDimensions}
-            onPositionChange={setLocalPosition}
-            onDimensionsChange={setLocalDimensions}
-          />
+        <div className={`advanced-controls ${isCollapsed ? 'collapsed' : ''}`}>
+          <button 
+            className="collapse-button"
+            onClick={toggleCollapse}
+            aria-label={isCollapsed ? 'Expandir controles' : 'Minimizar controles'}
+          >
+            {isCollapsed ? '↑' : '↓'}
+          </button>
           
-          <div className="design-actions">
-            <button 
-              onClick={handleCenterDesign}
-              className="center-button"
-            >
-              Center Design
-            </button>
-            <button 
-              onClick={() => onRemoveDesign(activePosition)}
-              className="remove-button"
-            >
-              Remove Design
-            </button>
+          <div className="controls-content">
+            <DesignControls
+              position={localPosition}
+              dimensions={localDimensions}
+              onPositionChange={setLocalPosition}
+              onDimensionsChange={setLocalDimensions}
+            />
+            
+            <div className="design-actions">
+              <button 
+                onClick={handleCenterDesign}
+                className="center-button"
+              >
+                Center Design
+              </button>
+              <button 
+                onClick={() => onRemoveDesign(activePosition)}
+                className="remove-button"
+              >
+                Remove Design
+              </button>
+            </div>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
