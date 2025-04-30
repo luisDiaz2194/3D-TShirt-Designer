@@ -1,16 +1,35 @@
 import React from 'react';
-import { AnimationControls } from './AnimationControls'; // Importación correcta
+import { AnimationControls } from './AnimationControls'; // Importaciï¿½n correcta
 import { DesignPanel } from '../DesignPanel/DesignPanel';
 import './Controls.css';
 
-export function ControlsContainer({ currentAnimation, setCurrentAnimation }) {
+
+export function ControlsContainer({
+  currentAnimation,
+  setCurrentAnimation,
+  designs = { front: null, back: null }, // Valor por defecto
+  onUpload = () => {},
+  onPositionChange = () => {},
+  onDimensionsChange = () => {},
+  onRemoveDesign = () => {},
+  color,
+  setColor
+}) {
   return (
     <div className="controls-container">
       <AnimationControls 
         currentAnimation={currentAnimation}
         setCurrentAnimation={setCurrentAnimation}
       />
-      <DesignPanel />
+      <DesignPanel
+        designs={designs}
+        onUpload={onUpload}
+        onPositionChange={onPositionChange}
+        onDimensionsChange={onDimensionsChange}
+        onRemoveDesign={onRemoveDesign}
+        color={color}
+        setColor={setColor}
+      />
     </div>
   );
 }

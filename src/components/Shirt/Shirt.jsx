@@ -1,5 +1,5 @@
 import { useGLTF, Decal } from '@react-three/drei'
-import { useRef, useEffect, useState } from 'react'
+import { useRef, useEffect, useState, useMemo } from 'react'
 import { useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
 
@@ -15,9 +15,14 @@ export function Shirt({
   const animationTime = useRef(0)
   const prevAnimation = useRef(null)
 
-  // Texturas
-  const frontTexture = designs.front ? useLoader(THREE.TextureLoader, designs.front) : null
-  const backTexture = designs.back ? useLoader(THREE.TextureLoader, designs.back) : null
+  // Texturas con useMemo para evitar recreaciones innecesarias
+  const frontTexture = useMemo(() => {
+    return designs.front ? useLoader(THREE.TextureLoader, designs.front) : null
+  }, [designs.front])
+
+  const backTexture = useMemo(() => {
+    return designs.back ? useLoader(THREE.TextureLoader, designs.back) : null
+  }, [designs.back])
 
   // Referencias para partes de la camisa
   const rightShoulderRef = useRef(null)
@@ -32,7 +37,7 @@ export function Shirt({
   const INITIAL_SCALE = 1.5
   const INITIAL_ROTATION = [0, 0, 0]
 
-  // Configuración inicial
+  // ConfiguraciÃ³n inicial
   useEffect(() => {
     Object.values(nodes).forEach(node => {
       if (node.isMesh) {
@@ -150,6 +155,10 @@ export function Shirt({
                   rotation={[0, 0, 0]}
                   scale={[designDimensions.front.width, designDimensions.front.height, 1]}
                   map={frontTexture}
+                  polygonOffset
+                  polygonOffsetFactor={-5}
+                  depthTest={true}
+                  depthWrite={false}
                 />
               )}
               {isBack && backTexture && (
@@ -158,6 +167,10 @@ export function Shirt({
                   rotation={[0, Math.PI, 0]}
                   scale={[designDimensions.back.width, designDimensions.back.height, 1]}
                   map={backTexture}
+                  polygonOffset
+                  polygonOffsetFactor={-5}
+                  depthTest={true}
+                  depthWrite={false}
                 />
               )}
             </mesh>

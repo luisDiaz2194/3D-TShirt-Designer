@@ -1,42 +1,47 @@
 /* Estilos base */
 .design-panel {
-	position:fixed;
+	position: fixed;
 	left: 20px;
 	top: 30px;
-	background: rgb(255,255, 255);
-	padding: 15px;
-	border-radius: 10px;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	background: white;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 	z-index: 1000;
-	max-width: 300px;
+	width: 300px;
+	max-height: 90vh;
+	overflow-y: auto;
 	box-sizing: border-box;
-  }
-  
-  .design-panel .position-selector {
+}
+
+.design-panel .position-selector {
 	display: flex;
-	gap: 8px;
-	margin-bottom: 12px;
-  }
-  
-  .design-panel .position-selector button {
+	gap: 10px;
+	margin-bottom: 20px;
+	position: sticky;
+	top: 0;
+	background: white;
+	padding: 10px 0;
+	z-index: 1;
+}
+
+.design-panel .position-selector button {
 	flex: 1;
-	padding: 8px 12px;
+	padding: 10px;
+	border: 1px solid #ddd;
+	background: white;
+	border-radius: 4px;
 	cursor: pointer;
-	font-size: 14px;
-	transition: all 0.2s;
-	background-color: rgb(34, 34, 34);
-    color: #ffffff;
-    border: 1px solid rgb(34, 34, 34);
-    border-radius: 24px;
-    cursor: pointer;
-  }
-  
-  .design-panel .position-selector button.active {
-	background: rgb(55, 56, 56);
+	transition: all 0.3s ease;
+}
+
+.design-panel .position-selector button.active {
+	background: #4285F4;
 	color: white;
-  }
-  
-  .design-panel .design-uploader .upload-button {
+	border-color: #4285F4;
+}
+
+.design-panel .design-uploader .upload-button {
 	width: 100%;
 	padding: 10px;
 	background: #000000;
@@ -46,47 +51,134 @@
 	cursor: pointer;
 	font-size: 14px;
 	margin-bottom: 12px;
-  }
-  .design-panel .design-uploader .upload-button:hover{
+}
+.design-panel .design-uploader .upload-button:hover{
 	background: rgb(55, 56, 56);
-  }
-  .design-preview {
+}
+.design-preview-container {
+	margin: 10px 0;
+	height: 50px;
 	width: 100%;
-	max-height: 150px;
-	object-fit: contain;
-	border: 1px solid #eee;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #f5f5f5;
 	border-radius: 4px;
-	margin-top: 10px;
-  }
-  
-  /* Media Queries para responsividad */
-  @media (max-width: 768px) {
+	padding: 5px;
+	overflow: hidden;
+}
+
+.design-preview-placeholder {
+	color: #999;
+	text-align: center;
+	font-size: 12px;
+}
+
+.design-preview {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.design-preview img {
+	max-width: 100%;
+	max-height: 100%;
+	width: auto;
+	height: auto;
+	object-fit: contain;
+	display: block;
+}
+
+.design-actions {
+	display: flex;
+	gap: 10px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	position: sticky;
+	bottom: 0;
+	background: white;
+	padding: 10px 0;
+	z-index: 1;
+}
+
+.design-actions button {
+	flex: 1;
+	padding: 10px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-weight: 500;
+	transition: all 0.3s ease;
+}
+
+.center-button {
+	background: #4285F4;
+	color: white;
+}
+
+.center-button:hover {
+	background: #3367d6;
+}
+
+.remove-button {
+	background: #dc3545;
+	color: white;
+}
+
+.remove-button:hover {
+	background: #c82333;
+}
+
+/* Estilos para la barra de scroll */
+.design-panel::-webkit-scrollbar {
+	width: 8px;
+}
+
+.design-panel::-webkit-scrollbar-track {
+	background: #f1f1f1;
+	border-radius: 4px;
+}
+
+.design-panel::-webkit-scrollbar-thumb {
+	background: #888;
+	border-radius: 4px;
+}
+
+.design-panel::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}
+
+/* Media Queries para responsividad */
+@media (max-width: 768px) {
 	.design-panel {
-	  width: 100%;
-	  left: 50%;
-	  transform: translateX(-50%);
-	  top: 70px;
-	  padding: 10px;
+		width: 100%;
+		left: 50%;
+		transform: translateX(-50%);
+		top: 70px;
+		padding: 10px;
 	}
-  
+
 	.position-selector button {
-	  padding: 6px 8px;
-	  font-size: 12px;
+		padding: 6px 8px;
+		font-size: 12px;
 	}
-  
+
 	.upload-button {
-	  padding: 8px;
-	  font-size: 12px;
+		padding: 8px;
+		font-size: 12px;
 	}
-  }
-  
-  @media (max-width: 480px) {
+}
+
+@media (max-width: 480px) {
 	.design-panel {
-	  width: 95%;
-	  top: 70px;
+		width: 95%;
+		top: 70px;
 	}
-  
+
 	.position-selector {
-	  flex-direction: column;
+		flex-direction: column;
 	}
-  }
+}
+

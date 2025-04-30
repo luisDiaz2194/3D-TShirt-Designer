@@ -1,36 +1,40 @@
-import { useState } from 'react'
+import React from 'react';
 
 export function DesignUploader({ position, onUpload }) {
-  const [preview, setPreview] = useState(null)
-  
   const handleFileChange = (e) => {
-    const file = e.target.files[0]
-    if (!file) return
-    
-    const reader = new FileReader()
-    reader.onloadend = () => {
-      setPreview(reader.result)
-      onUpload(position, reader.result)
-    }
-    reader.readAsDataURL(file)
-  }
-  
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      onUpload(position, event.target.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
   return (
-    <div className="design-uploader">
-      <label>
-        <input 
-          type="file" 
-          accept="image/*" 
-          onChange={handleFileChange}
-          style={{ display: 'none' }}
-        />
-        <button className="upload-button">
-          Upload {position} Design
-        </button>
+    <div style={{ margin: '10px 0' }}>
+      <input
+        id={`file-input-${position}`}
+        type="file"
+        accept="image/*"
+        onChange={handleFileChange}
+        style={{ display: 'none' }}
+      />
+      <label
+        htmlFor={`file-input-${position}`}
+        style={{
+          display: 'block',
+          padding: '10px',
+          background: '#4285F4',
+          color: 'white',
+          borderRadius: '4px',
+          textAlign: 'center',
+          cursor: 'pointer'
+        }}
+      >
+        Upload {position} Design
       </label>
-      {preview && (
-        <img src={preview} alt={`${position} preview`} className="design-preview" />
-      )}
     </div>
-  )
+  );
 }
