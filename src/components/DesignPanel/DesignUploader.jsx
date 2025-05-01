@@ -17,7 +17,7 @@ export function DesignUploader({ position, onUpload }) {
         className="file-input"
       />
       <label htmlFor={`file-input-${position}`}>
-	  <UploadIcon size={18} /> Upload {position} Design
+	  <UploadIcon size={18} /> <span className='shirtDescription'>Upload {position} Design</span>
       </label>
     </div>
   );

@@ -2,19 +2,20 @@
 	--button-bg: rgb(34, 34, 34);
 	--button-hover: rgb(55, 56, 56);
 	--button-active: #dc3545;
+	--bg-black: rgba(0,0,0,0.7);
 }
 
 /* Estilos base del panel */
 .design-panel {
 	position: fixed;
 	left: 20px;
-	top: 30px;
-	background: white;
+	top: 90px;
+	background: var(--bg-black);
 	padding: 20px;
 	border-radius: 8px;
 	box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 	z-index: 1000;
-	width: 300px;
+	width: 200px;
 }
 
 /* Estilos de los botones básicos */
@@ -24,7 +25,7 @@
 	margin-bottom: 15px;
 }
 
-.position-selector button {
+.position-selector button  {
 	flex: 1;
 	padding: 10px;
 	border: none;
@@ -42,10 +43,16 @@
 .position-selector button.active {
 	background: var(--button-active);
 }
-
+.basic-controls{
+	position: relative;
+	overflow: hidden;
+	box-sizing: border-box;
+	padding: 5px;
+	
+}
 /* Estilos del uploader */
 .design-uploader {
-	margin-bottom: 15px;
+	margin: 10px auto;
 }
 
 .design-uploader label {
@@ -58,6 +65,7 @@
 	border-radius: 24px;
 	cursor: pointer;
 	transition: all 0.3s ease;
+	box-sizing: border-box;
 }
 
 .design-uploader label:hover {
@@ -71,7 +79,7 @@
 /* Estilos de los controles avanzados */
 .advanced-controls {
 	margin-top: 15px;
-	border-top: 1px solid #eee;
+	border-top: 1px solid var(--button-active);
 	padding-top: 15px;
 	position: relative;
 	transition: all 0.3s ease;
@@ -92,7 +100,7 @@
 	width: 24px;
 	height: 24px;
 	border-radius: 50%;
-	background: var(--button-bg);
+	background: var(--button-active);
 	color: white;
 	border: none;
 	cursor: pointer;
@@ -105,7 +113,8 @@
 }
 
 .collapse-button:hover {
-	background: var(--button-hover);
+	background: #ffffff;
+	color:  var(--button-active);
 }
 
 .controls-content {
@@ -113,7 +122,7 @@
 }
 
 .design-controls h4 {
-	color: var(--button-bg);
+	color: #ffffff;
 	margin: 15px 0 10px;
 	font-size: 14px;
 }
@@ -129,12 +138,12 @@
 }
 
 .slider-header label {
-	color: var(--button-bg);
+	color: #ffffff;
 	font-size: 14px;
 }
 
 .slider-header span {
-	color: var(--button-bg);
+	color: #ffffff;
 	font-size: 14px;
 }
 
@@ -188,8 +197,15 @@ input[type="range"]::-webkit-slider-thumb {
 	background: #c82333;
 }
 
+@media (max-width:940px){
+	.design-panel{
+		width: 200px;
+		
+	}
+}
+
 /* Media queries para tablets y móviles */
-@media (max-width: 768px) {
+@media (max-width: 720px) {
 	.design-panel {
 		position: fixed;
 		width: 100%;
@@ -205,32 +221,34 @@ input[type="range"]::-webkit-slider-thumb {
 	}
 
 	.basic-controls {
-		background: rgb(20 20 20);
-		backdrop-filter: blur(5px);
+		background: var(--bg-black);
 		padding: 10px;
-		position: fixed;
-		top: 80px;
-		left: 0;
-		right: 0;
+		position: absolute;
+		width: 70px;
+		top: 25px;
+		left: auto;
+		right: 20px;
 		z-index: 100;
-		width: 80%;
 		margin: 0 auto;
 		border-radius: 24px;
+		align-items: center;
+		justify-content: center;
+		display: flex;
+		flex-direction: column;
 	}
 
 	.advanced-controls {
-		background: rgba(255, 255, 255, 0.95);
+		background: var(--bg-black);
 		backdrop-filter: blur(5px);
-		padding: 15px;
+		padding: 25px 15px;
 		position: fixed;
 		bottom: 0;
 		left: 0;
 		right: 0;
 		margin: 0;
 		border-radius: 16px 16px 0 0;
-		box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-		max-height: 35vh;
-		overflow-y: auto;
+		max-height: 25vh;
+		overflow-y: scroll;
 		transition: all 0.3s ease;
 	}
 
@@ -241,23 +259,77 @@ input[type="range"]::-webkit-slider-thumb {
 	}
 
 	.collapse-button {
-		top: 8px;
+		top: 12px;
 	}
+	.position-selector {
+		display: flex;
+		flex-direction: column;
+	}
+	.position-selector button,.design-uploader label{
+		width: 52px;
+		height: 40px;
+	}
+	
+	.position-selector button .shirtDescription, .design-uploader .shirtDescription{
+		display: none;
+	}
+
+
 }
 
 @media (max-width: 480px) {
-	
-
+	.basic-controls {
+		background: var(--bg-black);
+		padding: 10px;
+		position: absolute;
+		width: max-content;
+		top: 25px;
+		left: 20px;
+		z-index: 100;
+		transform: none;
+		right: auto;
+		flex-direction: row;
+		justify-content: space-between;
+	}
+	.basic-controls .color-picker{
+		margin:0;
+	}
+	.basic-controls .position-selector{
+		flex-direction: row;
+		margin-bottom: 0;
+	}
+	.basic-controls .design-uploader{
+		margin: 0px 10px;
+	}
 	.advanced-controls {
 		padding: 12px;
-		max-height: 35vh;
+		max-height: 25vh;
 	}
-
+	.advanced-controls.collapsed{
+		padding: 25px;
+	}
 	.design-actions {
 		gap: 8px;
 	}
 }
-
+@media (max-width: 320px){
+	.basic-controls{
+		padding: 10px;
+		position: absolute;
+		width: 70px;
+		top: 25px;
+		left: 20px;
+		right: auto;
+		border-radius: 24px;
+		align-items: center;
+		justify-content: center;
+		display: flex;
+		flex-direction: column;
+	}
+	.basic-controls .position-selector{
+		flex-direction: column;
+	}
+}
 .design-preview-container {
 	margin: 10px 0;
 	height: 50px;
@@ -296,24 +368,18 @@ input[type="range"]::-webkit-slider-thumb {
 	font-size: 12px;
 }
 
-.design-controls {
-	margin-top: 15px;
-	border-top: 1px solid #eee;
-	padding-top: 15px;
-}
-
 .aspect-ratio-label {
 	display: flex;
 	align-items: center;
 	gap: 8px;
 	margin-bottom: 15px;
-	color: var(--button-bg) !important;
+	color: #ffffff!important;
 }
 
 .design-controls input[type="range"] {
 	width: 100%;
 	height: 4px;
-	background: #ddd;
+	background: var(--button-active);
 	border-radius: 2px;
 	outline: none;
 	-webkit-appearance: none;
@@ -324,7 +390,7 @@ input[type="range"]::-webkit-slider-thumb {
 	appearance: none;
 	width: 16px;
 	height: 16px;
-	background: var(--button-bg);
+	background: #ffffff;
 	border-radius: 50%;
 	cursor: pointer;
 }
@@ -363,21 +429,52 @@ input[type="range"]::-webkit-slider-thumb {
 
 .color-picker {
 	display: flex;
+	flex-direction: column;
 	align-items: center;
+	justify-content: center;
 	gap: 10px;
 	margin-bottom: 15px;
+	width:max-content;
   }
-  
-  .color-input {
-	width: 40px;
-	height: 40px;
+  .color-picker .colorPick{
+	position: relative;
+	overflow: hidden;
+	height: 50px;
+	width: 50px;
+	
+  }
+  .color-picker .colorPick .palette{
+	background: var(--button-bg);
+	padding: 5px;
+	border-radius: 14px;cursor: pointer;
+	position: absolute;
+	z-index: 1;
+	pointer-events: none;
+  }
+ 
+  .color-picker .colorPick .color-input {
+	width: 30px;
+	height: 30px;
 	border: none;
+	margin: 5px;
 	cursor: pointer;
+	background: var(--bg-black);
   }
-  
+  .color-picker .changeColor{
+	color: var(--button-bg);
+	font-weight: bold;
+	display: block;
+  }
   .color-preview {
+	display: none;
 	width: 30px;
 	height: 30px;
 	border-radius: 50%;
 	border: 2px solid #ddd;
+  }
+
+  @media (max-width:940px) {
+	.color-picker .colorPick .color-input {
+		background: var(--bg-black);
+	  }
   }

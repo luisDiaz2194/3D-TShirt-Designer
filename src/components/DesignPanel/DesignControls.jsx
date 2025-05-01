@@ -25,14 +25,7 @@ export function DesignControls({ position, dimensions, onPositionChange, onDimen
 
   return (
     <div className="design-controls">
-      <label className="aspect-ratio-label">
-        <input
-          type="checkbox"
-          checked={lockRatio}
-          onChange={() => setLockRatio(!lockRatio)}
-        />
-        Lock Aspect Ratio
-      </label>
+    
 
       <h4>Position</h4>
       <SliderControl
@@ -53,6 +46,14 @@ export function DesignControls({ position, dimensions, onPositionChange, onDimen
       />
 
       <h4>Size</h4>
+	  <label className="aspect-ratio-label">
+        <input
+          type="checkbox"
+          checked={lockRatio}
+          onChange={() => setLockRatio(!lockRatio)}
+        />
+        Lock Aspect Ratio
+      </label>
       <SliderControl
         label="Width"
         value={dimensions.width}

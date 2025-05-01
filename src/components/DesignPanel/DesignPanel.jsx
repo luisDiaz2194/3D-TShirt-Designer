@@ -5,6 +5,8 @@ import { DesignControls } from './DesignControls';
 import './../../styles/DesignPanel.css';
 import { IoShirtOutline } from "react-icons/io5";
 import { FaTshirt } from "react-icons/fa";
+import { IoMdColorPalette } from "react-icons/io";
+
 export function DesignPanel({ 
   designs = { front: null, back: null }, 
   onUpload = () => {},
@@ -42,13 +44,16 @@ export function DesignPanel({
     <div className="design-panel">
       <div className="basic-controls">
         <div className="color-picker">
-          <label>Color de la camisa:</label>
+			
+         <div className='colorPick'>
+		 <div className='palette'><IoMdColorPalette size={35}/></div>
           <input
             type="color"
             value={color}
             onChange={(e) => setColor(e.target.value)}
             className="color-input"
           />
+		 </div>
           <div className="color-preview" style={{ backgroundColor: color }} />
         </div>
 
@@ -57,13 +62,13 @@ export function DesignPanel({
             onClick={() => setActivePosition('front')}
             className={activePosition === 'front' ? 'active' : ''}
           >
-            <IoShirtOutline /> Front
+            <IoShirtOutline /> <span className='shirtDescription'>Front</span>
           </button>
           <button
             onClick={() => setActivePosition('back')}
             className={activePosition === 'back' ? 'active' : ''}
           >
-           <FaTshirt/> Back
+           <FaTshirt/> <span className='shirtDescription'>Back</span>
           </button>
         </div>
 

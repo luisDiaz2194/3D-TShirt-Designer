@@ -12,7 +12,7 @@
   z-index: 100;
   display: flex;
   gap: 10px;
-  background: rgba(0,0,0,0.7);
+  background: var(--bg-black);
   padding: 10px;
   border-radius: 20px;
 }
@@ -35,6 +35,33 @@
   background: var(--button-active);
 } 
 @media (max-width: 940px){
+	.animation-controls{
+		left: auto;
+		right: 0;
+		transform: none;
+		flex-direction: column;
+	}
+	.animation-controls button{
+		display: block;
+		width: 100%;
+		margin: 2px 0px 5px 0px;
+	}
+}
+
+@media (max-width:720px) {
+	.animation-controls{
+		top: 20px;
+		left: 50%;
+		transform: translate(-50%);
+		width: max-content;
+		flex-direction: row;
+	}
+	.animation-controls button{
+		width: auto;
+		display: inline-block;
+	}
+}
+@media (max-width:480px) {
 	.animation-controls{
 		left: auto;
 		right: 0;
