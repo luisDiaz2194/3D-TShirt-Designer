@@ -1,5 +1,5 @@
 import React from 'react';
-import { AnimationControls } from './AnimationControls'; // Importaci�n correcta
+import { AnimationControls } from './AnimationControls';
 import { DesignPanel } from '../DesignPanel/DesignPanel';
 
 

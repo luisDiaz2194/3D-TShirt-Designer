@@ -4,7 +4,6 @@
   import { Shirt } from './components/Shirt/Shirt'
   import { ControlsContainer } from './components/UI/ControlsContainer';
   import './styles/App.css'
-  import { DesignPanel } from './components/DesignPanel/DesignPanel'
   import { AnimationControls } from './components/UI/AnimationControls'
 
   export default function App() {

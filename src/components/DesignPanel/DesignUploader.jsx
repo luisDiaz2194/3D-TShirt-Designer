@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { UploadIcon } from '../Icons/UploadIcon';
 export function DesignUploader({ position, onUpload }) {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -17,7 +17,7 @@ export function DesignUploader({ position, onUpload }) {
         className="file-input"
       />
       <label htmlFor={`file-input-${position}`}>
-        Upload {position} Design
+	  <UploadIcon size={18} /> Upload {position} Design
       </label>
     </div>
   );

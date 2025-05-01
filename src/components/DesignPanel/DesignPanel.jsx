@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 import { DesignUploader } from './DesignUploader';
 import { DesignControls } from './DesignControls';
 import './../../styles/DesignPanel.css';
-
+import { IoShirtOutline } from "react-icons/io5";
+import { FaTshirt } from "react-icons/fa";
 export function DesignPanel({ 
   designs = { front: null, back: null }, 
   onUpload = () => {},
@@ -56,13 +57,13 @@ export function DesignPanel({
             onClick={() => setActivePosition('front')}
             className={activePosition === 'front' ? 'active' : ''}
           >
-            Front
+            <IoShirtOutline /> Front
           </button>
           <button
             onClick={() => setActivePosition('back')}
             className={activePosition === 'back' ? 'active' : ''}
           >
-            Back
+           <FaTshirt/> Back
           </button>
         </div>
 

@@ -2,6 +2,7 @@ import { useGLTF, Decal } from '@react-three/drei'
 import { useRef, useEffect, useMemo } from 'react'
 import { useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
+import { useShirtAnimations } from '../../hooks/useShirtAnimations'
 
 export function Shirt({ 
   currentAnimation, 
@@ -37,7 +38,7 @@ export function Shirt({
   const INITIAL_SCALE = 1.5
   const INITIAL_ROTATION = [0, 0, 0]
 
-  // ConfiguraciÃ³n inicial
+  // Configuracion inicial
   useEffect(() => {
     Object.values(nodes).forEach(node => {
       if (node.isMesh) {
@@ -94,7 +95,7 @@ export function Shirt({
     animationTime.current += delta
 
     switch(currentAnimation) {
-		case 'caminar': animateWalk(); break  // Asegúrate que coincida con tus IDs
+		case 'caminar': animateWalk(); break  
 		case 'flotar': animateFloat(); break
 		case 'rotar': animateRotate(); break
 		case 'latido': animatePulse(); break
