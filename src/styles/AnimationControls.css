@@ -34,4 +34,16 @@
 .animation-controls button.active {
   background: var(--button-active);
 } 
-
+@media (max-width: 940px){
+	.animation-controls{
+		left: auto;
+		right: 0;
+		transform: none;
+		flex-direction: column;
+	}
+	.animation-controls button{
+		display: block;
+		width: 100%;
+		margin: 2px 0px 5px 0px;
+	}
+}
