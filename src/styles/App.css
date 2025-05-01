@@ -4,18 +4,6 @@
   background: #444;
 }
 
-.animation-controls {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translate(-50%);
-  z-index: 100;
-  display: flex;
-  gap: 10px;
-  background: rgba(0,0,0,0.7);
-  padding: 10px;
-  border-radius: 20px;
-}
 
 .animation-button {
   background: #000000;

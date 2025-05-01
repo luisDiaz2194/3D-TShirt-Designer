@@ -94,11 +94,12 @@ export function Shirt({
     animationTime.current += delta
 
     switch(currentAnimation) {
-      case 'walk': animateWalk(); break
-      case 'float': animateFloat(); break
-      case 'rotate': animateRotate(); break
-      case 'pulse': animatePulse(); break
-    }
+		case 'caminar': animateWalk(); break  // Asegúrate que coincida con tus IDs
+		case 'flotar': animateFloat(); break
+		case 'rotar': animateRotate(); break
+		case 'latido': animatePulse(); break
+		default: break
+	  }
   })
 
   const animateWalk = () => {
