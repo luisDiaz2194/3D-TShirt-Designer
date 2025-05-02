@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { DesignUploader } from './DesignUploader';
 import { DesignControls } from './DesignControls';
@@ -17,23 +16,46 @@ export function DesignPanel({
   setColor
 }) {
   const [activePosition, setActivePosition] = useState('front');
-  const [localPosition, setLocalPosition] = useState({ x: 0, y: 1.26 });
-  const [localDimensions, setLocalDimensions] = useState({ width: 0.5, height: 0.5 });
+  
+  const [localPositions, setLocalPositions] = useState({
+    front: { x: 0, y: 1.26 },
+    back: { x: 0, y: 1.26 }
+  });
+
+  const [localDimensions, setLocalDimensions] = useState({
+    front: { width: 0.5, height: 0.5 },
+    back: { width: 0.5, height: 0.5 }
+  });
+
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   useEffect(() => {
-    onPositionChange(activePosition, localPosition);
-  }, [localPosition, activePosition]);
+    onPositionChange(activePosition, localPositions[activePosition]);
+  }, [localPositions, activePosition]);
 
   useEffect(() => {
-    onDimensionsChange(activePosition, localDimensions);
+    onDimensionsChange(activePosition, localDimensions[activePosition]);
   }, [localDimensions, activePosition]);
 
   const hasDesign = designs && designs[activePosition];
 
   const handleCenterDesign = () => {
-    setLocalPosition({ x: 0, y: 1.26 });
-    setLocalDimensions({ width: 0.5, height: 0.5 });
+    handlePositionChange({ x: 0, y: 1.26 });
+    handleDimensionsChange({ width: 0.5, height: 0.5 });
+  };
+
+  const handlePositionChange = (newPos) => {
+    setLocalPositions(prev => ({
+      ...prev,
+      [activePosition]: newPos
+    }));
+  };
+
+  const handleDimensionsChange = (newDims) => {
+    setLocalDimensions(prev => ({
+      ...prev,
+      [activePosition]: newDims
+    }));
   };
 
   const toggleCollapse = () => {
@@ -44,16 +66,15 @@ export function DesignPanel({
     <div className="design-panel">
       <div className="basic-controls">
         <div className="color-picker">
-			
-         <div className='colorPick'>
-		 <div className='palette'><IoMdColorPalette size={35}/></div>
-          <input
-            type="color"
-            value={color}
-            onChange={(e) => setColor(e.target.value)}
-            className="color-input"
-          />
-		 </div>
+          <div className='colorPick'>
+            <div className='palette'><IoMdColorPalette size={35}/></div>
+            <input
+              type="color"
+              value={color}
+              onChange={(e) => setColor(e.target.value)}
+              className="color-input"
+            />
+          </div>
           <div className="color-preview" style={{ backgroundColor: color }} />
         </div>
 
@@ -68,7 +89,7 @@ export function DesignPanel({
             onClick={() => setActivePosition('back')}
             className={activePosition === 'back' ? 'active' : ''}
           >
-           <FaTshirt/> <span className='shirtDescription'>Back</span>
+            <FaTshirt/> <span className='shirtDescription'>Back</span>
           </button>
         </div>
 
@@ -79,23 +100,22 @@ export function DesignPanel({
         />
       </div>
 
-      {/* Resto del componente permanece igual */}
-	  {hasDesign && (
+      {hasDesign && (
         <div className={`advanced-controls ${isCollapsed ? 'collapsed' : ''}`}>
           <button 
             className="collapse-button"
             onClick={toggleCollapse}
             aria-label={isCollapsed ? 'Expandir controles' : 'Minimizar controles'}
           >
-            {isCollapsed ? '↑' : '↓'}
+            {isCollapsed ? '?' : '?'}
           </button>
           
           <div className="controls-content">
             <DesignControls
-              position={localPosition}
-              dimensions={localDimensions}
-              onPositionChange={setLocalPosition}
-              onDimensionsChange={setLocalDimensions}
+              position={localPositions[activePosition]}
+              dimensions={localDimensions[activePosition]}
+              onPositionChange={handlePositionChange}
+              onDimensionsChange={handleDimensionsChange}
             />
             
             <div className="design-actions">
