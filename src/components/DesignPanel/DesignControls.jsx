@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
-import  './../../styles/DesignPanel.css';
-
+import React, { useState } from 'react';
+import './../../styles/DesignPanel.css';
 
 export function DesignControls({ position, dimensions, onPositionChange, onDimensionsChange }) {
   const [lockRatio, setLockRatio] = useState(true);
@@ -25,8 +24,6 @@ export function DesignControls({ position, dimensions, onPositionChange, onDimen
 
   return (
     <div className="design-controls">
-    
-
       <h4>Position</h4>
       <SliderControl
         label="X"
@@ -46,7 +43,7 @@ export function DesignControls({ position, dimensions, onPositionChange, onDimen
       />
 
       <h4>Size</h4>
-	  <label className="aspect-ratio-label">
+      <label className="aspect-ratio-label">
         <input
           type="checkbox"
           checked={lockRatio}
