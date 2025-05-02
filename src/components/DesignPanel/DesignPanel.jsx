@@ -5,7 +5,7 @@ import './../../styles/DesignPanel.css';
 import { IoShirtOutline } from "react-icons/io5";
 import { FaTshirt } from "react-icons/fa";
 import { IoMdColorPalette } from "react-icons/io";
-
+import { FaLongArrowAltDown, FaLongArrowAltUp } from "react-icons/fa";
 export function DesignPanel({ 
   designs = { front: null, back: null }, 
   onUpload = () => {},
@@ -107,7 +107,7 @@ export function DesignPanel({
             onClick={toggleCollapse}
             aria-label={isCollapsed ? 'Expandir controles' : 'Minimizar controles'}
           >
-            {isCollapsed ? '?' : '?'}
+            {isCollapsed ? <FaLongArrowAltDown/> : <FaLongArrowAltUp/>}
           </button>
           
           <div className="controls-content">
